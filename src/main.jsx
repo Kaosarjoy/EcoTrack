@@ -10,6 +10,7 @@ import MyActivities from './component/Pages/MyActivities';
 import AuthLayout from './component/Layout/AuthLayout';
 import Login from './component/Pages/Login';
 import Register from './component/Pages/Register';
+import AuthProvider from './component/Provider/AuthProvider';
 const router = createBrowserRouter([
   {
     path: "/",
@@ -46,7 +47,9 @@ const router = createBrowserRouter([
 ]);
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <RouterProvider router={router}></RouterProvider>
+   <AuthProvider>
+     <RouterProvider router={router}></RouterProvider>
+   </AuthProvider>
   </StrictMode>,
 )
 //https://drive.google.com/file/d/1A8LdSS8lAOHEmBVU5I720HXGPiA5a7vs/view
