@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import { NavLink, useNavigate } from "react-router";
-import { AuthContext } from "../component/Provider/AuthProvider";
+import { AuthContext } from "../Provider/AuthProvider";
 import { updateProfile } from "firebase/auth";
 
 const Register = () => {
@@ -39,7 +39,7 @@ const Register = () => {
           <input type="email" name="email" placeholder="Your Email" className="w-full border p-2 rounded-lg" required />
           <input type="text" name="photo" placeholder="Photo URL" className="w-full border p-2 rounded-lg" />
           <input type="password" name="password" placeholder="Password" className="w-full border p-2 rounded-lg" required />
-          <button type="submit" className="w-full bg-black text-white py-2 rounded-lg hover:opacity-90">Register</button>
+          <button type="submit" className="btn bg-base-200 text-secondary hover:bg-base-100 w-full">Register</button>
           <p>Already have an account? <NavLink to='/auth/login' className='text-blue-500 underline'>Login</NavLink></p>
         </form>
       </div>
