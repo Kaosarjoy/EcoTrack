@@ -1,4 +1,4 @@
-import React, { createContext, useEffect, useState } from 'react';
+import React, { createContext, useEffect, useState } from "react";
 import { 
     getAuth, 
     createUserWithEmailAndPassword, 
@@ -8,55 +8,53 @@ import {
     GoogleAuthProvider,
     signInWithPopup 
 } from "firebase/auth";
-import app from '../Firebase/firebase.config';
+import app from "../Firebase/firebase.config";
 
-// 1. AuthContext তৈরি করা
 export const AuthContext = createContext();
 
-// 2. Firebase Auth এবং Google Provider ইনিশিয়ালাইজ করা
 const auth = getAuth(app);
 const googleProvider = new GoogleAuthProvider();
 
 const AuthProvider = ({ children }) => {
     const [user, setUser] = useState(null);
-    const [loading, setLoading] = useState(true); 
+    const [loading, setLoading] = useState(true);
+
     const createUser = (email, password) => {
-        setLoading(true); 
+        setLoading(true);
         return createUserWithEmailAndPassword(auth, email, password);
     };
+
     const signInUser = (email, password) => {
-        setLoading(true); 
+        setLoading(true);
         return signInWithEmailAndPassword(auth, email, password);
     };
+
     const signInWithGoogle = () => {
-        setLoading(true); 
+        setLoading(true);
         return signInWithPopup(auth, googleProvider);
     };
 
-    
     const logOutUser = () => {
-        setLoading(true); 
+        setLoading(true);
         return signOut(auth);
     };
- 
-    
+
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
-            console.log('User state changed:', currentUser); 
-            setLoading(false); 
             setUser(currentUser);
+            setLoading(false);
         });
-        return () => unsubscribe(); 
-        
-        
+        return () => unsubscribe();
     }, []);
+
     const authInfo = {
         user,
-        loading, 
+        loading,
         createUser,
         signInUser,
         signInWithGoogle,
-        logOutUser
+        logOutUser,
+        setLoading, 
     };
 
     return (

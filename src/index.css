@@ -23,3 +23,19 @@
   --color-base-200: #E7E7E7;
   --color-accent: #8F9779;     
 }
+
+
+
+/* From Uiverse.io by Juanes200122 */ 
+.container {
+  background-color: #414141;
+}
+#bounce {
+  animation: bounce 4s ease-in-out infinite;
+  transform: translateY(36px);
+}
+@keyframes bounce {
+  0%, 100% { transform: translateY(36px); }
+  50% { transform: translateY(46px); }
+}
+/* End of Uiverse.io code */
