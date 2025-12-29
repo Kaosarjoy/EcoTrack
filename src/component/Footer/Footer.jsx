@@ -4,7 +4,7 @@ const Footer = () => {
     return (
         <footer className="footer footer-horizontal footer-center bg-primary text-primary-content p-10">
   <aside>
-    <img src={logoImg} className='w-10 h-10' alt='logo'></img>
+    <img src={logoImg} className='w-10 h-10 rounded-full' alt='logo'></img>
     <p className="font-bold">
       EcoTrack Industries Ltd.
       <br />

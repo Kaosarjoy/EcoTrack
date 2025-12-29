@@ -1,8 +1,23 @@
-import React from "react";
-import { NavLink } from "react-router";
+import React, { useContext } from "react";
+import { NavLink, useNavigate } from "react-router";
 import logoImg from "../../assets/logo.jpg";
+import UserImg from "../../assets/user.png";
+import { AuthContext } from "../Provider/AuthProvider";
 
 const Navbar = () => {
+  const { user, logOutUser } = useContext(AuthContext);
+  const navigate = useNavigate();
+
+  const handleLogOut = () => {
+    logOutUser()
+      .then(() => {
+        navigate("/auth/login");
+      })
+      .catch((error) => {
+        console.log(error.message);
+      });
+  };
+
   const links = (
     <>
       <li>
@@ -17,6 +32,7 @@ const Navbar = () => {
           Home
         </NavLink>
       </li>
+
       <li>
         <NavLink
           to="/challenges"
@@ -29,6 +45,7 @@ const Navbar = () => {
           Challenges
         </NavLink>
       </li>
+
       <li>
         <NavLink
           to="/myActivities"
@@ -66,10 +83,7 @@ const Navbar = () => {
             </svg>
           </div>
 
-          <ul
-            tabIndex={0}
-            className="menu menu-sm dropdown-content mt-3 w-52 rounded-box bg-base-100 p-2 shadow"
-          >
+          <ul className="menu menu-sm dropdown-content mt-3 w-52 rounded-box bg-base-100 p-2 shadow">
             {links}
           </ul>
         </div>
@@ -87,15 +101,48 @@ const Navbar = () => {
       </div>
 
       {/* Navbar End */}
-      <div className="navbar-end gap-2">
-        <NavLink to="/auth/login">
-          <button className="btn btn-primary btn-sm">Login</button>
-        </NavLink>
-        <NavLink to="/auth/register">
-          <button className="btn bg-base-200 text-secondary hover:bg-base-100 btn-sm">
-            Register
-          </button>
-        </NavLink>
+      <div className="navbar-end gap-4 flex items-center">
+        {user ? (
+          <>
+            <div className="relative group cursor-pointer">
+              <img
+                src={user.photoURL || UserImg}
+                className="w-10 h-10 rounded-full border"
+              />
+              <div className="absolute right-0 mt-2 hidden group-hover:block bg-black text-white text-xs px-3 py-1 rounded">
+                {user.displayName || user.email}
+              </div>
+            </div>
+
+            <button
+              onClick={handleLogOut}
+              className="btn btn-sm btn-outline ml-2"
+            >
+              Logout
+            </button>
+          </>
+        ) : (
+          <>
+            <div className="flex justify-between items-center">
+              <img
+              src={UserImg}
+              className="w-10 h-10 rounded-full border"
+            />
+            <NavLink
+              to="/auth/login"
+              className="btn btn-primary btn-sm ml-2"
+            >
+              Login
+            </NavLink>
+            <NavLink 
+            to="/auth/register"
+            className="btn btn-secondary btn-sm ml-2"
+            >
+              Register
+            </NavLink>
+            </div>
+          </>
+        )}
       </div>
     </div>
   );

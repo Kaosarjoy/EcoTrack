@@ -9,10 +9,10 @@ const MyActivities = () => {
   if (!user) {
     return (
       <div className='items-center'>
-        <Marquee className='bg-blue-200 p-4 m-4 max-w-1200 mx-auto rounded-xl' speed={50} pauseOnHover={true}>
+        <Marquee className='bg-color-primary p-4 m-4 max-w-1200 mx-auto rounded-xl' speed={50} pauseOnHover={true}>
       <h2 className='text-center m-10 text-2xl text-green-400'>
-          Please <NavLink to='/auth/login' className='text-red-500 underline'> Login </NavLink> 
-          or <NavLink to='/auth/register' className='underline text-black'> Register </NavLink>
+          Please <NavLink to='/auth/login' className='text-primary underline'> Login </NavLink> 
+          or <NavLink to='/auth/register' className='underline text-secondary'> Register </NavLink>
           to view your profile
         </h2>
         </Marquee>

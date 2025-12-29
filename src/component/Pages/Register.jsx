@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { NavLink, useNavigate } from "react-router";
 import { AuthContext } from "../Provider/AuthProvider";
 import { updateProfile } from "firebase/auth";
@@ -6,28 +6,42 @@ import { updateProfile } from "firebase/auth";
 const Register = () => {
   const { createUser } = useContext(AuthContext);
   const navigate = useNavigate();
+  const [passwordError, setPasswordError] = useState("");
 
- const handleRegister = async (e) => {
-  e.preventDefault();
-  const form = e.target;
-  const name = form.name.value;
-  const email = form.email.value;
-  const photo = form.photo.value;
-  const password = form.password.value;
+  const handleRegister = async (e) => {
+    e.preventDefault();
+    const form = e.target;
+    const name = form.name.value;
+    const email = form.email.value;
+    const photo = form.photo.value;
+    const password = form.password.value;
 
-  try {
-    const result = await createUser(email, password);
+    // password validation
+    const passwordRegex =
+      /^(?=.*[a-z])(?=.*[A-Z])(?=.*[^A-Za-z0-9]).{6,}$/;
 
-    await updateProfile(result.user, {
-      displayName: name,
-      photoURL: photo,
-    });
+    if (!passwordRegex.test(password)) {
+      setPasswordError(
+        "Password must contain at least 1 uppercase, 1 lowercase, 1 special character and minimum 6 characters"
+      );
+      return; // invalid হলে submit বন্ধ
+    } else {
+      setPasswordError("");
+    }
 
-    navigate("/");
-  } catch (error) {
-    console.error("Registration Error:", error.message);
-  }
-};
+    try {
+      const result = await createUser(email, password);
+
+      await updateProfile(result.user, {
+        displayName: name,
+        photoURL: photo,
+      });
+
+      navigate("/");
+    } catch (error) {
+      console.error("Registration Error:", error.message);
+    }
+  };
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100">
@@ -35,12 +49,54 @@ const Register = () => {
         <h2 className="text-2xl font-bold text-center mb-6">Register</h2>
 
         <form onSubmit={handleRegister} className="space-y-4">
-          <input type="text" name="name" placeholder="Your Name" className="w-full border p-2 rounded-lg" required />
-          <input type="email" name="email" placeholder="Your Email" className="w-full border p-2 rounded-lg" required />
-          <input type="text" name="photo" placeholder="Photo URL" className="w-full border p-2 rounded-lg" />
-          <input type="password" name="password" placeholder="Password" className="w-full border p-2 rounded-lg" required />
-          <button type="submit" className="btn bg-base-200 text-secondary hover:bg-base-100 w-full">Register</button>
-          <p>Already have an account? <NavLink to='/auth/login' className='text-blue-500 underline'>Login</NavLink></p>
+          <input
+            type="text"
+            name="name"
+            placeholder="Your Name"
+            className="w-full border p-2 rounded-lg"
+            required
+          />
+
+          <input
+            type="email"
+            name="email"
+            placeholder="Your Email"
+            className="w-full border p-2 rounded-lg"
+            required
+          />
+
+          <input
+            type="text"
+            name="photo"
+            placeholder="Photo URL"
+            className="w-full border p-2 rounded-lg"
+          />
+
+          <input
+            type="password"
+            name="password"
+            placeholder="Password"
+            className="w-full border p-2 rounded-lg"
+            required
+          />
+
+          {passwordError && (
+            <p className="text-red-500 text-sm">{passwordError}</p>
+          )}
+
+          <button
+            type="submit"
+            className="btn bg-base-200 text-secondary hover:bg-base-100 w-full"
+          >
+            Register
+          </button>
+
+          <p className="text-center">
+            Already have an account?{" "}
+            <NavLink to="/auth/login" className="text-blue-500 underline">
+              Login
+            </NavLink>
+          </p>
         </form>
       </div>
     </div>
