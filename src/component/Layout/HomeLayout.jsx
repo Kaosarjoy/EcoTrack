@@ -4,21 +4,32 @@ import { Outlet } from 'react-router';
 import Footer from '../Footer/Footer';
 
 import Loader from '../Pages/Loader';
-import { LoaderContext } from '../Provider/LoaderProvider';
+import { AuthContext } from '../Provider/AuthProvider';
+
 
 const HomeLayout = () => {
-    const { loading } = useContext(LoaderContext);
+    const { loading } = useContext(AuthContext);
 
 if (loading) {
   return <Loader />;
 }
 
     return (
-        <div>
-            <Navbar></Navbar>
-            <Outlet></Outlet>
-            <Footer></Footer>
-        </div>
+       <div className="relative max-w-[1200px] mx-auto">
+  {/* Navbar fixed কিন্তু wrapper এর ভিতরে */}
+  <nav className="fixed top-0 left-0 w-full bg-white z-50 shadow-md">
+    <div className="max-w-[1200px] mx-auto">
+      <Navbar />
+    </div>
+  </nav>
+
+  {/* Content: Navbar height অনুযায়ী top padding দেওয়া হলো */}
+  <div className="pt-16">  {/* Navbar height অনুযায়ী adjust করো */}
+    <Outlet />
+    <Footer />
+  </div>
+</div>
+
     );
 };
 

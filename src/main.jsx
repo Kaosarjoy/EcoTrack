@@ -13,7 +13,7 @@ import Register from './component/Pages/Register';
 import AuthProvider from './component/Provider/AuthProvider';
 import PrivateRoute from './component/Provider/PrivateRoute';
 import Error from './component/Error/Error'
-import { LoaderProvider } from './component/Provider/LoaderProvider';
+
 const router = createBrowserRouter([
   {
     path: "/",
@@ -61,11 +61,11 @@ const router = createBrowserRouter([
 ]);
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-   <LoaderProvider>
+ 
     <AuthProvider>
      <RouterProvider router={router}></RouterProvider>
    </AuthProvider>
-   </LoaderProvider>
+  
   </StrictMode>,
 )
 //https://drive.google.com/file/d/1A8LdSS8lAOHEmBVU5I720HXGPiA5a7vs/view
