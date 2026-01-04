@@ -22,20 +22,30 @@ const MyActivities = () => {
   }
 
   return (
-    <div className="max-w-md mx-auto p-6 bg-base-100 shadow-md rounded-lg text-center">
-      <img
-        src={user.photoURL || "https://i.ibb.co/default-user.png"}
-        alt={user.displayName || "User"}
-        className="w-32 h-32 mx-auto rounded-full object-cover"
-      />
-      <h2 className="text-2xl font-bold mt-4">{user.displayName || "No Name"}</h2>
-     
-      <p className="text-gray-600 mt-1">{user.email}</p>
+    <div className="max-w-sm mx-auto p-6 bg-white dark:bg-gray-800 shadow-xl rounded-2xl text-center mt-6 mb-6 border border-gray-100 dark:border-gray-700 transition-transform hover:scale-105 duration-300">
+  {/* User Image */}
+  <div className="relative w-32 h-32 mx-auto -mt-16">
+    <img
+      src={user.photoURL || "https://i.ibb.co/default-user.png"}
+      alt={user.displayName || "User"}
+      className="w-32 h-32 rounded-full object-cover border-4 border-white dark:border-gray-800 shadow-md"
+    />
+  </div>
 
-      <button className="btn btn-info mt-4 w-full">
-        Update Profile
-      </button>
-    </div>
+  {/* User Name */}
+  <h2 className="text-2xl font-bold mt-4 text-gray-900 dark:text-gray-100">
+    {user.displayName || "No Name"}
+  </h2>
+
+  {/* Email */}
+  <p className="text-gray-500 dark:text-gray-400 mt-1">{user.email}</p>
+
+  {/* Update Button */}
+  <button className="btn btn-info mt-6 w-full rounded-full bg-gradient-to-r from-cyan-500 to-blue-500 hover:from-blue-500 hover:to-cyan-500 text-white shadow-lg transition-all duration-300">
+    Update Profile
+  </button>
+</div>
+
   );
 };
 
