@@ -1,51 +1,68 @@
-import React, { useContext } from 'react';
-import { AuthContext } from '../Provider/AuthProvider';
-import { NavLink } from 'react-router';
-import Marquee from 'react-fast-marquee';
+import React, { useContext, useEffect, useState } from "react";
+import { AuthContext } from "../Provider/AuthProvider";
 
 const MyActivities = () => {
   const { user } = useContext(AuthContext);
+  const [activities, setActivities] = useState([]);
 
-  if (!user) {
-    return (
-      <div className='items-center'>
-        <Marquee className='bg-color-primary p-4 m-4 max-w-1200 mx-auto rounded-xl' speed={50} pauseOnHover={true}>
-      <h2 className='text-center m-10 text-2xl text-green-400'>
-          Please <NavLink to='/auth/login' className='text-primary underline'> Login </NavLink> 
-          or <NavLink to='/auth/register' className='underline text-secondary'> Register </NavLink>
-          to view your profile
-        </h2>
-        </Marquee>
-        
-      </div> 
-    );
-  }
+  useEffect(() => {
+    if (!user) return;
+    fetch(`http://localhost:4500/my-activities?email=${user.email}`)
+      .then((res) => res.json())
+      .then((data) => setActivities(data))
+      .catch((err) => console.log(err));
+  }, [user]);
+
+  const handleDelete = async (id) => {
+    try {
+      const res = await fetch(`http://localhost:4500/my-activities/${id}`, {
+        method: 'DELETE',
+      });
+      const data = await res.json();
+      if (res.ok) {
+        // UI থেকে remove
+        setActivities((prev) => prev.filter((act) => act._id !== id));
+        alert("Activity deleted successfully");
+      } else {
+        alert(data.message);
+      }
+    } catch (err) {
+      console.error(err);
+      alert("Error deleting activity");
+    }
+  };
+
+  if (!user) return <p className="text-center mt-10">Please login first</p>;
 
   return (
-    <div className="max-w-sm mx-auto p-6 bg-white dark:bg-gray-800 shadow-xl rounded-2xl text-center mt-6 mb-6 border border-gray-100 dark:border-gray-700 transition-transform hover:scale-105 duration-300">
-  {/* User Image */}
-  <div className="relative w-32 h-32 mx-auto -mt-16">
-    <img
-      src={user.photoURL || "https://i.ibb.co/default-user.png"}
-      alt={user.displayName || "User"}
-      className="w-32 h-32 rounded-full object-cover border-4 border-white dark:border-gray-800 shadow-md"
-    />
-  </div>
+    <div className="max-w-3xl mx-auto p-4">
+      <h2 className="text-2xl font-bold mb-4">My Activities</h2>
 
-  {/* User Name */}
-  <h2 className="text-2xl font-bold mt-4 text-gray-900 dark:text-gray-100">
-    {user.displayName || "No Name"}
-  </h2>
+      {activities.length === 0 && <p>You have not joined any challenge yet.</p>}
 
-  {/* Email */}
-  <p className="text-gray-500 dark:text-gray-400 mt-1">{user.email}</p>
+      {activities.map((a) => (
+        <div
+          key={a._id}
+          className="bg-white shadow rounded p-4 mb-3 flex flex-col md:flex-row md:justify-between items-start md:items-center"
+        >
+          <div>
+            <h3 className="text-lg font-semibold">
+              Challenge ID: {a.challengeId}
+            </h3>
+            <p>Status: {a.status}</p>
+            <p>Progress: {a.progress}%</p>
+            <p>Joined: {new Date(a.joinDate).toLocaleDateString()}</p>
+          </div>
 
-  {/* Update Button */}
-  <button className="btn btn-info mt-6 w-full rounded-full bg-gradient-to-r from-cyan-500 to-blue-500 hover:from-blue-500 hover:to-cyan-500 text-white shadow-lg transition-all duration-300">
-    Update Profile
-  </button>
-</div>
-
+          <button
+            onClick={() => handleDelete(a._id)}
+            className="btn bg-primary mt-3 md:mt-0"
+          >
+            Delete
+          </button>
+        </div>
+      ))}
+    </div>
   );
 };
 

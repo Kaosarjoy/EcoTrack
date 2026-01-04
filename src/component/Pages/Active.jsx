@@ -1,25 +1,54 @@
-import React, { useEffect, useState } from 'react';
-import Marquee from 'react-fast-marquee';
-import { NavLink } from 'react-router';
+import React, { useEffect, useState, useContext } from "react";
+import { AuthContext } from "../Provider/AuthProvider";
+import { useNavigate } from "react-router";
 
 const Active = () => {
-  const [active, setActive] = useState([]); 
+  const [active, setActive] = useState([]);
+  const { user } = useContext(AuthContext);
+  const navigate = useNavigate();
 
   useEffect(() => {
-    fetch('http://localhost:4500/challenges/active')
-      .then(res => res.json())
-      .then(data => setActive(data)) 
-      .catch(err => console.log(err));
+    fetch("http://localhost:4500/challenges/active")
+      .then((res) => res.json())
+      .then((data) => setActive(data))
+      .catch((err) => console.log(err));
   }, []);
 
+  const handleJoin = async (challengeId) => {
+    if (!user) {
+      navigate("/auth/login");
+      return;
+    }
+
+    const res = await fetch(
+      `http://localhost:4500/challenges/join/${challengeId}`,
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email: user.email }),
+      }
+    );
+
+    if (res.ok) {
+      alert("Challenge joined successfully!");
+      navigate("/myActivities");
+    } else {
+      alert("Failed to join challenge");
+    }
+  };
+
   return (
-    
-      <div className="max-w-7xl mx-auto px-5 py-10">
-      <h2 className="text-3xl font-bold mb-6 text-center">Active Challenges</h2>
+    <div className="max-w-7xl mx-auto px-5 py-10">
+      <h2 className="text-3xl font-bold mb-6 text-center">
+        Active Challenges
+      </h2>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-7">
-        {active.map(ch => (  
-          <div key={ch._id} className="bg-white rounded-lg shadow hover:shadow-lg transition duration-300">
+        {active.map((ch) => (
+          <div
+            key={ch._id}
+            className="bg-white rounded-lg shadow hover:shadow-lg transition duration-300"
+          >
             <img
               src={ch.imageUrl}
               alt={ch.title}
@@ -31,16 +60,18 @@ const Active = () => {
               <p className="mt-2 text-gray-700">
                 {ch.duration} days | {ch.impactMetric}
               </p>
-                
-              <NavLink to='/myActivities'>
-                <button className="btn bg-primary mt-3 w-full">Active Challenge</button>
-              </NavLink>
+
+              <button
+                onClick={() => handleJoin(ch._id)}
+                className="btn bg-primary mt-3 w-full"
+              >
+                Active Challenge
+              </button>
             </div>
           </div>
         ))}
       </div>
     </div>
-   
   );
 };
 
