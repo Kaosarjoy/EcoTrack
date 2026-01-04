@@ -14,6 +14,7 @@ import AuthProvider from './component/Provider/AuthProvider';
 import PrivateRoute from './component/Provider/PrivateRoute';
 import Error from './component/Error/Error'
 
+
 const router = createBrowserRouter([
   {
     path: "/",

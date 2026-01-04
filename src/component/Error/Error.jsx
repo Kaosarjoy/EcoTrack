@@ -1,29 +1,28 @@
 import React from 'react';
+import { Link } from 'react-router';
+import errrImg from '../../assets/error-404-D5a2U_1Y.png'; 
 
-import PageErrorImg from '../../assets/error-404-D5a2U_1Y.png'
-import {  useNavigate } from 'react-router';
-
-const PageError = () => {
-    const navigate = useNavigate()
-    return (
-        <div className="flex flex-col min-h-screen bg-base-100">
-      
-      {/* Main Content */}
-      <div className=" flex flex-col items-center justify-center text-center p-4">
-        <img src={PageErrorImg} alt="PageErrorImg" className="mb-6" />
-        <h1 className='text-4xl font-bold mb-2'>OOPS!! APP NOT FOUND</h1>
-        <p className='mt-2 text-gray-400 font-semibold mb-6'>
-          The page you are looking for is not available.
-        </p>
-        <button onClick={() => navigate(-1)} className='btn btn-gradient'>
-          Go Back
-        </button>
-      </div>
-
-     
-      
+const Error = () => {
+  return (
+    <div className="h-screen flex flex-col items-center justify-center bg-gray-100 px-5 text-center">
+      <img
+        src={errrImg}
+        alt="404 Error"
+        className="w-80 max-w-full mb-6 animate-fadeIn"
+      />
+      <h1 className="text-6xl font-bold mb-4 text-red-600">404</h1>
+      <p className="text-xl text-gray-700 mb-6">Oops! Page Not Found</p>
+      <p className="text-gray-500 mb-6">
+        The page you are looking for might have been removed, had its name changed, or is temporarily unavailable.
+      </p>
+      <Link
+        to="/"
+        className="bg-green-500 hover:bg-green-600 text-white px-6 py-3 rounded-md font-semibold transition"
+      >
+        Go to Home
+      </Link>
     </div>
-    );
+  );
 };
 
-export default PageError;
+export default Error;

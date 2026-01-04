@@ -1,6 +1,7 @@
 import React from 'react';
 import { useNavigation } from 'react-router';
 import Loader from '../Pages/Loader';
+import Active from '../Pages/Active';
 
 const Challenges = () => {
     const navigation = useNavigation();
@@ -9,7 +10,7 @@ const Challenges = () => {
    }
     return (
         <div>
-            
+            <Active></Active>
         </div>
     );
 };
