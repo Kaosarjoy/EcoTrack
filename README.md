@@ -1,16 +1,21 @@
-# React + Vite
+# EcoTrack
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+🌱 Live Link : 
 
-Currently, two official plugins are available:
+EcoTrack হলো একটি ওয়েব অ্যাপ যা ব্যবহারকারীদের ইকো-ফ্রেন্ডলি চ্যালেঞ্জে অংশগ্রহণ করতে এবং তাদের কার্যক্রম ট্র্যাক করতে সাহায্য করে।  
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Features
 
-## React Compiler
+- ✅ **Active Challenges:** ব্যবহারকারীরা বিভিন্ন চ্যালেঞ্জ দেখতে এবং অংশগ্রহণ করতে পারে।  
+- ✅ **My Activities:** ব্যবহারকারীরা তাদের অংশগ্রহণকৃত চ্যালেঞ্জ এবং প্রগ্রেস ট্র্যাক করতে পারে।  
+- ✅ **User Profile:** ব্যবহারকারীরা তাদের নাম, ইমেইল, এবং প্রোফাইল ছবি আপডেট করতে পারে।  
+- ✅ **Tips & Events:** পরিবেশ সংরক্ষণ সম্পর্কিত টিপস এবং ইভেন্টের তথ্য দেখানো হয়।  
+- ✅ **Responsive Design:** ডেস্কটপ, ট্যাবলেট এবং মোবাইলে সুন্দরভাবে কাজ করে।  
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Tech Stack
 
-## Expanding the ESLint configuration
+- React.js (Frontend)  
+- Node.js & Express.js (Backend)  
+- MongoDB (Database)  
+- Tailwind CSS (Styling)  
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
